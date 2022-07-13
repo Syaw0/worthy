@@ -1,8 +1,14 @@
 import React from "react";
+import data from "../data";
+import { useStore } from "../store/store";
+import { fadeinScale, fadeinScaleLandPageImg } from "../Styles/keyframes";
 import Flex from "../Styles/styledComponent/Flex";
 import Text from "../Styles/styledComponent/Text";
 
 function MainWiki(){
+
+    const currentPhilosophy = useStore(state=>state.currentPhilosophy)
+    const setCurrentMain = useStore(state=>state.setCurrentMain)
     return(
 
         <Flex justify={"center"} align="center" css={{
@@ -35,35 +41,38 @@ function MainWiki(){
                     <Text css={{
                         headline1_i:"900",
                         marginBottom:"$4",
+                        animation:`${fadeinScale} 1s 0.6s both ease`,
                         "@bp5":{
                             headline2_i:"900",
                             marginTop:"$7"
                         }
                         }}>
-                        Seneca the Younger
+                        {data[currentPhilosophy]["name"]}
                     </Text>
 
 
                     <Text css={{
-                        headline6_i:"600",
+                        subhead1_i:"600",
                         color:"$onBg800",
+                        animation:`${fadeinScale} 1s 1s both ease`,
                         "@bp5":{
-                            subhead1_i:"600",
+                            subhead2_i:"600",
                         }
                         // width:"70%",
                         }}>
-                        Seneca was born in Córdoba in Hispania, and raised in Rome, where he was trained in rhetoric and philosophy. His father was Seneca the Elder, his elder brother was Lucius Junius Gallio Annaeanus, and his nephew was the poet Lucan. In AD 41, Seneca was exiled to the island of Corsica under emperor Claudius,[2] but was allowed to return in 49 to become a tutor to Nero. When Nero became emperor in 54, Seneca became his advisor and, together with the praetorian prefect Sextus Afranius Burrus, provided competent government for the first five years of Nero's reign. Seneca's influence over Nero declined with time, and in 65 Seneca was forced to take his own life for alleged complicity in the Pisonian conspiracy to assassinate Nero, in which he was likely to have been innocent.[3] His stoic and calm suicide has become the subject of numerous paintings. 
+                        {data[currentPhilosophy]["wiki"]}
                     </Text>
                 </Flex>
 
                 
                 <Flex justify={"between"} css={{
                     width:"100%",
+                    animation:`${fadeinScale} 1s 1.2s both ease`,
                     "@bp5":{
                         flex_c:"",
                     },
                     "& p":{
-                        headline5_i:"700",
+                        headline6_i:"700",
                         cursor:"pointer",
                         color:"$onBg800",
                         padding:"$1 $2",
@@ -78,7 +87,7 @@ function MainWiki(){
 
                     }}>
 
-                    <Text css={{
+                    <Text onClick={()=>{setCurrentMain("list")}} css={{
                         "@bp5":{
                         order:"2"   ,
                         width:"100%",
@@ -99,7 +108,7 @@ function MainWiki(){
                         }
                         }}>
 
-                        <Text css={{
+                        <Text onClick={()=>{window.open(data[currentPhilosophy]["cwiki"])}} css={{
                             "@bp5":{
                                 order:"1"
                             }
@@ -107,7 +116,7 @@ function MainWiki(){
                             Complete Wiki
                         </Text>
 
-                        <Text css={{
+                        <Text  onClick={()=>{setCurrentMain("quotes") ; console.log("hello")}} css={{
                             border:"1px solid $onBg800",
                             marginLeft:"$3",
                             "&:hover":{
@@ -127,13 +136,15 @@ function MainWiki(){
 
             <Flex css={{
                 
-                backgroundImage:`url(${"https://user-images.githubusercontent.com/78824988/178515375-4551d6b9-119f-4953-960b-93a0a131c075.png"})`,
+                backgroundImage:`url(${data[currentPhilosophy]["img"]})`,
                 imgBg:"",
                 backgroundRepeat:"no-repeat",
                 backgroundPosition:"bottom",
                 backgroundSize:"contain",
                 padding:"$10 0 0 0",
+                animation:`${fadeinScale} 1s 0s both ease`,
                 "@bp1":{
+                    animation:`${fadeinScaleLandPageImg} 1s 0s both ease`,
                     position:"fixed",
                     order:"0",
                     opacity:"0.1"

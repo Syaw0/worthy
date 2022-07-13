@@ -1,14 +1,30 @@
 import React from "react";
+import { useStore } from "../store/store";
 import Flex from "../Styles/styledComponent/Flex";
 import Text from "../Styles/styledComponent/Text";
+ 
+type data = {
+    name:string ;
+    img:string;
+    role:string ;
+    wiki:string ;
+    cwiki:string ;
+    quotes:object[]
+}
 
-function MainListItems(){
+function MainListItems({data }:{data:data }){
+    
+    const setPhilosophy = useStore(state=>state.setPhilosophy)
+
     return(
-        <Flex justify={"between"} align="center" css={{
+        <Flex onClick={()=>{setPhilosophy(data["name"])}} justify={"between"} align="center" css={{
             width:"100%",
             cursor:"pointer",
             padding:"$1 $2",
             borderRadius:"8px",
+            "@bp4":{
+                padding:"5px"
+            },
             "&  p":{
                 cursor:"pointer"
             },
@@ -24,9 +40,15 @@ function MainListItems(){
                     "& img":{
                         width:"100px",
                         height:"100px",
-                    }
+                    },
+                    "@bp4":{
+                        "& img":{
+                        width:"60px",
+                        height:"60px",
+                        }
+                    },
                     }}> 
-                    <img src="https://user-images.githubusercontent.com/78824988/178515375-4551d6b9-119f-4953-960b-93a0a131c075.png" />
+                    <img src={data["img"]} alt="img "/>
                 </Flex>   
 
                 <Flex dir={"column"} css={{
@@ -36,16 +58,19 @@ function MainListItems(){
                     <Text css={{
                         headline5_i:"700",
                         marginBottom:"$1",
+                        "@bp4":{
+                            headline6_i:"700",
+                        }
 
                         }}> 
-                        Marcus Aurelius
+                        {data["name"]}
                     </Text>
 
                     <Text css={{
                         subhead2_i:"500",
                         color:"$onBg700"
                         }}>
-                        Stoic philosopher
+                        {data["role"]}
                     </Text>
 
                 </Flex>
@@ -56,9 +81,12 @@ function MainListItems(){
             <Flex>
                 <Text css={{
                     subhead1_i:"500",
-                    color:"$onBg700"
+                    color:"$onBg700",
+                    "@bp4":{
+                        subhead2_i:"500",
+                    }
                 }}>
-                    32 quotes
+                    {data["quotes"].length + " quotes"}
                 </Text>
             </Flex>
 

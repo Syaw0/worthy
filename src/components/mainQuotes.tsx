@@ -1,9 +1,38 @@
 import React from "react";
 import Ico_quote from "../asesst/Icons/Ico_quote";
+import data from "../data";
+import { useStore } from "../store/store";
+import { fadein, fadeinScale } from "../Styles/keyframes";
 import Flex from "../Styles/styledComponent/Flex";
 import Text from "../Styles/styledComponent/Text";
 
 function MainQuotes(){
+
+    const currentPhilosophy = useStore(state=>state.currentPhilosophy)
+    const setCurrentMain = useStore(state=>state.setCurrentMain)
+    const currentQuote = useStore(state=>state.currentQuote)
+    const setQuote = useStore(state=>state.setQuote)
+    
+
+    const hadnleQuoteNavigation = (which:string) => {
+        if(which === "next"){
+            if(currentQuote === data[currentPhilosophy]["quotes"].length -1){
+                setQuote(0)
+            }else{
+                setQuote(currentQuote+1)
+            }
+
+        }else{
+            if(currentQuote === 0){
+                setQuote(data[currentPhilosophy]["quotes"].length - 1)
+            }else{
+                setQuote(currentQuote-1)
+            }
+
+        }
+    }
+
+
     return(
         <Flex dir={"column"} css={{
             width:"100%",
@@ -38,12 +67,13 @@ function MainQuotes(){
 
                     <Flex css={{
                         marginTop:"$3",
+                        animation:`${fadeinScale} 1s 0s both ease`,
                         "& img":{
                             width:"50px",
                             height:"50px",
                         },
                         }}>
-                        <img src="https://user-images.githubusercontent.com/78824988/178515375-4551d6b9-119f-4953-960b-93a0a131c075.png" /> 
+                        <img src={data[currentPhilosophy]["img"]} /> 
                         <Flex dir={"column"} css={{
                             marginLeft:"$1",
                             
@@ -51,14 +81,14 @@ function MainQuotes(){
                             <Text css={{
                                 headline5_i:"700",
                                 }}>
-                                Marcus Aurelius
+                                {data[currentPhilosophy]["name"]}
                             </Text>
 
                             <Text css={{
                                 subhead1_i:"500",
                                 color:"$onBg700"
                                 }}>
-                                Stoic philosopher
+                                {data[currentPhilosophy]["role"]}
                             </Text>
                         </Flex>
                     </Flex>
@@ -72,8 +102,10 @@ function MainQuotes(){
                         width:"65%"
                     }
                     }}>
-                        <Text css={{
+                        <Text id="quote" css={{
                             display0_i:"900",
+                            color:"$onBg900",
+                            animation:`${fadein} 2s 1s both ease`,
                             "@bp1":{
                                 display2_i:"900"
                             },
@@ -82,7 +114,7 @@ function MainQuotes(){
                                 marginTop:"$4"
                             }
                         }}>
-                            You have power over your mind - not outside events. Realize this, and you will find strength.
+                            {data[currentPhilosophy]["quotes"][currentQuote]["quote"]}
                         </Text>
                 </Flex>
 
@@ -92,6 +124,7 @@ function MainQuotes(){
             <Flex justify={"between"} css={{
                 width:"100%",
                 margin:"$5 0",
+                animation:`${fadeinScale} 1s 1.5s both ease`,
                 "& p":{
                     headline6_i:"700",
                     padding:"$1 $2",
@@ -116,7 +149,7 @@ function MainQuotes(){
                         // textAlign:"center",
                         width:"100%",
                         }}> 
-                        <Text>
+                        <Text onClick={()=>{setCurrentMain("wiki")}}>
                             Go Back To List
                         </Text>
                     </Flex>
@@ -131,11 +164,11 @@ function MainQuotes(){
                             order:"-1"
                         }
                         }}> 
-                        <Text>
+                        <Text onClick={()=>{hadnleQuoteNavigation("pre")}}>
                             Previous Quote
                         </Text>
 
-                        <Text css={{
+                        <Text onClick={()=>{hadnleQuoteNavigation("next")}} css={{
                             border:"1px solid $onBg",
                             "&:hover":{
                                 backgroundColor:"$onBg",
