@@ -55,6 +55,7 @@ export const {
         },
 
         lineHeights:{
+            display0:"85px",
             display1:"76px",
             display2:"64px",
             display3:"52px",
@@ -114,12 +115,30 @@ export const {
 
     },
     utils:{
+        "display0":(weight:string)=>({
+            fontFamily:"$lora" ,
+            fontWeight:weight,
+            fontSize:"$display0",
+            lineHeight:"$display1",
+            fontStyle:"normal"
+         }),
+
+         "display0_i":(weight:string)=>({
+            display1:weight,
+            fontStyle:"italic"
+         }),
+
         "display1":(weight:string)=>({
             fontFamily:"$lora" ,
             fontWeight:weight,
             fontSize:"$display1",
             lineHeight:"$display1",
             fontStyle:"normal"
+         }),
+
+         "display1_i":(weight:string)=>({
+            display1:weight,
+            fontStyle:"italic"
          }),
 
          "display2":(weight:string)=>({
@@ -130,12 +149,22 @@ export const {
             fontStyle:"normal"
          }),
 
+         "display2_i":(weight:string)=>({
+            display2:weight,
+            fontStyle:"italic"
+         }),
+
          "display3":(weight:string)=>({
             fontFamily:"$lora" ,
             fontWeight:weight,
             fontSize:"$display3",
             lineHeight:"$display3",
             fontStyle:"normal"
+         }),
+
+         "display3_i":(weight:string)=>({
+            display3:weight,
+            fontStyle:"italic"
          }),
 
         "headline1":(weight:string)=>({
@@ -227,6 +256,13 @@ export const {
             letterSpacing:"$1"
          }),
 
+
+        "subhead1_i":(weight:string)=>({
+            subhead1:weight,
+            fontStyle:"italic",
+            
+         }),
+
         "subhead2":(weight:string)=>({
             fontFamily:"$lora" ,
             fontWeight:weight,
@@ -296,6 +332,11 @@ export const {
         }),
         opac:(value:string)=>({
             opacity:value
+        }),
+        imgBg:()=>({
+            backgroundOrigin:"content-box",
+            backgroundPosition:"center",
+            backgroundSize:"cover",
         })
 
     }
